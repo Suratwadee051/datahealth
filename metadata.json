@@ -1,0 +1,6 @@
+{
+  "name": "การตรวจคัดกรองสุขภาพ",
+  "description": "แดชบอร์ดการตรวจคัดกรองสุขภาพเพื่อสำรวจกลุ่มเสี่ยงโรคต่าง ๆ เชื่อมโยงข้อมูล Google Sheet อัปเดตสด",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
