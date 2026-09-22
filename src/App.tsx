@@ -16,6 +16,7 @@ import { DetailDataTable } from "./components/DetailDataTable";
 import { HealthRecord, FilterState } from "./types";
 import { FALLBACK_RECORDS } from "./data/fallbackData";
 import { calculateKpi } from "./utils/healthCalculations";
+import { fetchHealthRecordsLive } from "./utils/sheetService";
 import { AlertCircle, CheckCircle2, RefreshCw } from "lucide-react";
 
 export default function App() {
@@ -32,26 +33,22 @@ export default function App() {
     searchQuery: "",
   });
 
-  // Fetch live data from Google Sheet via API
+  // Fetch live data from Google Sheet (Hybrid: Server API + Direct fallback for GitHub Pages)
   const fetchLiveData = useCallback(async (isManualRefresh = false) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/health-data?t=${Date.now()}`);
-      if (!res.ok) {
-        throw new Error(`HTTP error ${res.status}`);
-      }
-      const data = await res.json();
-      if (data.success && Array.isArray(data.records) && data.records.length > 0) {
-        setRecords(data.records);
-        setLastUpdated(new Date(data.updatedAt || Date.now()));
+      const { records: liveRecords } = await fetchHealthRecordsLive();
+      if (liveRecords && liveRecords.length > 0) {
+        setRecords(liveRecords);
+        setLastUpdated(new Date());
         if (isManualRefresh) {
-          showToast(`อัปเดตข้อมูลสำเร็จ! ดึงข้อมูลล่าสุด ${data.records.length} รายการจาก Google Sheet`);
+          showToast(`อัปเดตข้อมูลสำเร็จ! ดึงข้อมูลล่าสุด ${liveRecords.length} รายการจาก Google Sheet`);
         }
       } else {
-        throw new Error("Invalid data format received");
+        throw new Error("Invalid or empty data received");
       }
     } catch (err) {
-      console.warn("Could not fetch from /api/health-data, using local records:", err);
+      console.warn("Could not fetch live sheet data, keeping current records:", err);
       if (isManualRefresh) {
         showToast("เชื่อมต่อชีตสดชั่วคราวไม่ได้ กำลังแสดงชุดข้อมูลที่แคชไว้ล่าสุด");
       }
