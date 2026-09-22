@@ -242,11 +242,7 @@ export default function App() {
             ระบบแดชบอร์ดการตรวจคัดกรองสุขภาพเพื่อสำรวจกลุ่มเสี่ยงโรคต่าง ๆ
           </p>
           <p className="text-slate-500">
-            ผู้จัดทำ: <span className="font-semibold text-blue-700">น.ส.สุรัตนวดี รอดกสิกรรม</span>{" "}
-            • แหล่งข้อมูล: Google Spreadsheet ID{" "}
-            <code className="bg-slate-100 px-1.5 py-0.5 rounded text-[11px] font-mono text-slate-600">
-              1NP9UlFb_pFjFcBvzned4Wzz397Wh48CkX--insZAa7Q
-            </code>
+            ผู้จัดทำ: <span className="font-semibold text-blue-700">น.ส.สุรัตนวดี รอดกสิกรรม</span>
           </p>
           <p className="text-[11px] text-slate-400">
             © 2026 ระบบสารสนเทศสุขภาพชุมชน • รองรับการอัปเดตข้อมูลสดแบบ Real-Time
